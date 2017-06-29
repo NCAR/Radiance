@@ -15,7 +15,7 @@ namespace RADIANCE {
   Microcontroller::Microcontroller() {
     // Set terminate handler to custom restart function
     // This will restart the pi if an unknown exception occurs
-    // std::set_terminate(SystemHaltException::RestartSystem);
+    std::set_terminate(SystemHaltException::RestartSystem);
   }
 
   // Sets heater output based on the information in frame_data
