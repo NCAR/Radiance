@@ -5,4 +5,4 @@
 sudo service watchdog start
 
 mkfifo /tmp/stdout_log
-sudo /home/pi/RADIANCE-main/radiance 2>1 | tee /tmp/stdout_log
+sudo /home/pi/radiance-dims-debugging/radiance 2>1 | tee /tmp/stdout_log
