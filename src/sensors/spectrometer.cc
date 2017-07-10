@@ -73,7 +73,7 @@ namespace RADIANCE{
   // which starts the read and then waits until a spectrum is
   // ready. Then reads and converts to float array for storage
   // Returns false if read failed
-  bool Spectrometer::ReadSpectrum(std::array<float,kNumPixels>& f_spectrum,f_pixelvals) {
+  bool Spectrometer::ReadSpectrum(std::array<float,kNumPixels>& f_spectrum,std::array<float,kNumPixels>& f_pixelvals) {
 
     // Configure the spectrometer with the measurement config
     // If the spectrometer is not found, restart the Pi
