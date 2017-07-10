@@ -96,7 +96,8 @@ namespace RADIANCE{
     double d_spectrum[kNumPixels];
     double d_pixelvals[kNumPixels];
      // Dummy variable to write GetScopeData Timestamps to
-    unsigned int* dummy;
+     unsigned int dummy1 = 10;
+     unsigned int * dummy = &dummy1;
 
     // Get lambdas from device
     if (AVS_GetLambda(handle_,d_spectrum)!=ERR_SUCCESS) {
