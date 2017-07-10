@@ -94,7 +94,7 @@ namespace RADIANCE{
 
     // Avantes library requires double arrays so use for measuring
     double d_spectrum[kNumPixels];
-    double d_pixelval[kNumPixels];
+    double d_pixelvals[kNumPixels];
 
     // Get lambdas from device
     if (AVS_GetLambda(handle_,d_spectrum)!=ERR_SUCCESS) {
@@ -103,7 +103,7 @@ namespace RADIANCE{
     }
     
      // Get pixelvals from device
-    if (AVS_GetScopeData(handle_,d_pixelval)!=ERR_SUCCESS) {
+    if (AVS_GetScopeData(handle_,d_pixelvals)!=ERR_SUCCESS) {
       std::cerr << "Err in GetScopeData" << std::endl; //DEBUG
       return false;
     }
