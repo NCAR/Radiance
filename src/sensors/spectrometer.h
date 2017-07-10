@@ -12,6 +12,9 @@ namespace RADIANCE {
 
     // Number of spectrometer elements
     static const int kNumPixels = 2048;
+    
+    // Dummy variable to write GetScopeData Timestamps to
+    unsigned int dummy;
 
     // Return a spectrum and pixelvalue measurement into the given array
     bool ReadSpectrum(std::array<float,kNumPixels>& spectrum, std::array<float,kNumPixels>& pixelvals);

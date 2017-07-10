@@ -103,7 +103,7 @@ namespace RADIANCE{
     }
     
      // Get pixelvals from device
-    if (AVS_GetScopeData(handle_,d_pixelvals)!=ERR_SUCCESS) {
+    if (AVS_GetScopeData(handle_, dummy, d_pixelvals)!=ERR_SUCCESS) {
       std::cerr << "Err in GetScopeData" << std::endl; //DEBUG
       return false;
     }
