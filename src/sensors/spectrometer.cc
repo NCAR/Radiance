@@ -98,6 +98,7 @@ namespace RADIANCE{
 
     // Get lambdas from device
     if (AVS_GetLambda(handle_,d_spectrum)!=ERR_SUCCESS) {
+
       std::cerr << "Err in GetLambda" << std::endl; //DEBUG
       return false;
     }
@@ -105,6 +106,9 @@ namespace RADIANCE{
      // Get pixelvals from device
     if (AVS_GetScopeData(handle_,d_pixelval)!=ERR_SUCCESS) {
       std::cerr << "Err in GetScopeData" << std::endl; //DEBUG
+
+      std::cerr << "Err in GetScopeData" << std::endl; //DEBUG
+
       return false;
     }
 
