@@ -73,7 +73,7 @@ namespace RADIANCE{
   // which starts the read and then waits until a spectrum is
   // ready. Then reads and converts to float array for storage
   // Returns false if read failed
-  bool Spectrometer::ReadSpectrum(std::array<float,kNumPixels>& f_spectrum) {
+  bool Spectrometer::ReadSpectrum(std::array<float,kNumPixels>& f_spectrum,f_pixelvals) {
 
     // Configure the spectrometer with the measurement config
     // If the spectrometer is not found, restart the Pi
@@ -92,18 +92,30 @@ namespace RADIANCE{
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
-    // Avantes library requires double array so use for measuring
+    // Avantes library requires double arrays so use for measuring
     double d_spectrum[kNumPixels];
+    double d_pixelval[kNumPixels];
 
-    // Get spectrum from device
+    // Get lambdas from device
     if (AVS_GetLambda(handle_,d_spectrum)!=ERR_SUCCESS) {
+      std::cerr << "Err in GetLambda" << std::endl; //DEBUG
+      return false;
+    }
+    
+     // Get pixelvals from device
+    if (AVS_GetScopeData(handle_,d_pixelval)!=ERR_SUCCESS) {
       std::cerr << "Err in GetScopeData" << std::endl; //DEBUG
       return false;
     }
 
-    // Convert spectrum to floats for storage efficiency
+    // Convert lamdas to floats for storage efficiency
     for (int i=0; i < kNumPixels; i++) {
       f_spectrum[i] = (float) d_spectrum[i];
+    }
+    
+     // Convert pixelvals to floats for storage efficiency
+    for (int i=0; i < kNumPixels; i++) {
+      f_pixelvals[i] = (float) d_pixelvals[i];
     }
 
     return true;

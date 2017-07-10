@@ -27,7 +27,7 @@ namespace RADIANCE {
 
     // Read main instrument(spectrometer)
     // If the spectrometer cannot be read from, throw an exception to restart the system
-    if (!spectrometer_.ReadSpectrum(frame_data_.spectrum)) {
+    if (!spectrometer_.ReadSpectrum(frame_data_.spectrum,frame_data_.pixelvals)) {
       throw SystemHaltException();
     }
 
@@ -104,10 +104,16 @@ namespace RADIANCE {
       // Write timestamp of measurement
       DataHandler::BinaryWrite(file,frame_data_.time_stamp);
 
-      // Write the spectrometer measurements
+      // Write the spectrometer lambda measurements
       for (auto& i : frame_data_.spectrum) {
         DataHandler::BinaryWrite(file,i);
       }
+      
+       // Write the spectrometer pixelval measurements
+      for (auto& i : frame_data_.pixelvals) {
+        DataHandler::BinaryWrite(file,i);
+      }
+      
       // Write the engineering/housekeeping measurements to the given file
       DataHandler::BinaryWrite(file,frame_data_.spectrometer_temperature);
       DataHandler::BinaryWrite(file,frame_data_.rpi_temperature);

@@ -34,6 +34,7 @@ namespace RADIANCE {
     struct frame_data_type {
       unsigned int time_stamp;
       std::array<float,Spectrometer::kNumPixels> spectrum;
+      std::array<float,Spectrometer::kNumPixels> pixelvals;
       float spectrometer_temperature;
       float rpi_temperature;
       float upper_battery_temperature;
