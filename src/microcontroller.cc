@@ -1,6 +1,7 @@
 #include <math.h>
 #include <chrono>
 #include <iostream>
+#include <sstream> //possibly remove
 #include <thread>
 #include <stdexcept>
 #include <pigpio.h>
@@ -69,7 +70,9 @@ namespace RADIANCE {
       end = std::chrono::high_resolution_clock::now();
       std::chrono::duration<float> fs = end - begin;
       std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(fs);
-      std::cout << "Milliseconds taken: " << ms.count() << std::endl; // DEBUG
+      std::ostream stream(nullptr); //test
+      stream.rdbuf(std::cout.rdbuf()); //test
+      stream << "Milliseconds taken: " << ms.count() << std::endl; // DEBUG
 
       // Sleep, if necessary
       // This reduces the chance that too much data will be taken on the storage
