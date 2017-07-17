@@ -30,9 +30,12 @@ namespace RADIANCE {
     // Spectrometer measurement config
     MeasConfigType meas_config_;
 
+	//Spectrometer device config
+	DeviceConfigType dev_config_;
+	  
     // Converts the voltage into a temperature
     float ConvertVoltageToTemperature(float voltage);
-
+	  
   };
 
 } // namespace RADIANCE
