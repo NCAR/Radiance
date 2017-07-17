@@ -14,7 +14,7 @@ namespace RADIANCE {
     static const int kNumPixels = 2048;
 	  
 	//test test!!
-	CalibTest();
+	bool CalibTest();
 
     // Return a spectrum and pixelvalue measurement into the given array
     bool ReadSpectrum(std::array<float,kNumPixels>& spectrum, std::array<float,kNumPixels>& pixelvals);
