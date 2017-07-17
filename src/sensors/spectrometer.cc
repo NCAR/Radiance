@@ -68,6 +68,13 @@ namespace RADIANCE{
     meas_config_.m_Control.m_LaserWaveLength = 1; // Peak wavelength of laser(nm), used for Raman spectroscopy
     meas_config_.m_Control.m_StoreToRam      = 0; // Number of spectra to be store to RAM
   }
+	
+  Spectrometer::CalibTest(){
+	std::cout << m_Irradiance.m_IntensityCalib.m_aCalibConvers << std::endl;
+	std::cout << m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
+	}
+	
+	
 
   // Reads the spectrum with the setup handle. First calls AVS_Measure
   // which starts the read and then waits until a spectrum is
