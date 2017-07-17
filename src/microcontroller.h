@@ -3,6 +3,7 @@
 
 #include "datahandler.h"
 #include "controls/heatercontrol.h"
+#include "sensors/spectrometer.h"
 
 namespace RADIANCE {
   // Controls the RADIANCE software. Encapsulates the command
