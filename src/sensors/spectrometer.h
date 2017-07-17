@@ -33,6 +33,9 @@ namespace RADIANCE {
 	//Spectrometer device config
 	DeviceConfigType dev_config_;
 	  
+	//Spectrum calibration config
+	SpectrumCalibrationType spec_calib_;
+	  
     // Converts the voltage into a temperature
     float ConvertVoltageToTemperature(float voltage);
 	  
