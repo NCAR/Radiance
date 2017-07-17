@@ -74,7 +74,6 @@ namespace RADIANCE {
       stream.rdbuf(std::cout.rdbuf()); //test
       stream << "Milliseconds taken: " << ms.count() << std::endl; // DEBUG
 	  //test test!!!!!
-      Spectrometer::CalibTest();
 
       // Sleep, if necessary
       // This reduces the chance that too much data will be taken on the storage
