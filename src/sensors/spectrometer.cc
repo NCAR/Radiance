@@ -69,9 +69,10 @@ namespace RADIANCE{
     meas_config_.m_Control.m_StoreToRam      = 0; // Number of spectra to be store to RAM
   }
 	
-  Spectrometer::CalibTest(){
+  bool Spectrometer::CalibTest(){
 	std::cout << m_Irradiance.m_IntensityCalib.m_aCalibConvers << std::endl;
 	std::cout << m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
+	  return true
 	}
 	
 	
