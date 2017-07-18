@@ -123,7 +123,7 @@ namespace RADIANCE{
     }
 	  
 	  
-	std::cout << m_Irradiance.m_IntensityCalib.m_aCalibConvers << std::endl;
+	std::cout << dev_config_.m_Irradiance.m_IntensityCalib.m_aCalibConvers[1000] << std::endl;
 	//std::cout << spec_calib_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
 
     return true;
