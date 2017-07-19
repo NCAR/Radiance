@@ -122,7 +122,7 @@ namespace RADIANCE{
       f_pixelvals[i] = (float) d_pixelvals[i];
     }
 	  
-	  
+	std::cout << "Test lol" << std::endl;
 	std::cout << dev_config_.m_Irradiance.m_IntensityCalib.m_aCalibConvers[1000] << std::endl;
 	//std::cout << spec_calib_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
 
