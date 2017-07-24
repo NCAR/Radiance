@@ -124,10 +124,10 @@ namespace RADIANCE{
 	 
     std::cout << "Calibration array is: " << std::endl;
 	  
-	for (int i = 0; i <= numElements - 1; i++) 
+	for (int i = 0; i <= 2047; i++) 
     	std::cout << dev_config_.m_Irradiance.m_IntensityCalib.m_aCalibConvers[i] << std::endl;
 	
-std::cout << "Calibration time is: " << dev_config_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
+  //std::cout << "Calibration time is: " << dev_config_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
 
     return true;
   }
