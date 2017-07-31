@@ -56,7 +56,7 @@ namespace RADIANCE {
 
       // Start the clock
       begin = std::chrono::high_resolution_clock::now();
-
+      std::cout << "TestTest";
       // Read all sensors
       data_handler_.ReadSensorData();
 
