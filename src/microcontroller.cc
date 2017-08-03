@@ -21,7 +21,7 @@ namespace RADIANCE {
 
   // Sets heater output based on the information in frame_data
   // The thermal algorithm is a dead zone between the minimum and maximum heater temperature(kMinHeaterTemp and kMaxHeaterTemp)
-  void Microcontroller::SetThermalControl(DataHandler::frame_data_type &frame_data) {
+  void Microcontroller::SetThermalControl(DataHandler::frame_data_type& frame_data) {
 
     // Spectrometer heating
     if (frame_data.spectrometer_temperature <= kMinHeaterTemp && !spectrometer_heater_.IsHeaterOn()){

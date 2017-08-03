@@ -21,7 +21,7 @@ namespace RADIANCE {
     void StartLoop();
 
     // Process the measured data and then write the heater output
-    void SetThermalControl(DataHandler::frame_data_type frame_data);
+    void SetThermalControl(DataHandler::frame_data_type& frame_data);
 
     // Heater temp getters
     static float GetMaxHeaterTemp();
