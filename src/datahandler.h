@@ -26,7 +26,7 @@ namespace RADIANCE {
     
     // Reads a measurement from each sensor and places it into the
     // science data struct.
-    void ReadSensorData();
+    void ReadSensorData(bool spectrometer_heater_status, bool battery_heater_status);
 
     // Writes the science data struct to storage
     void WriteFrameToStorage();
