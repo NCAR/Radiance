@@ -21,7 +21,7 @@ namespace RADIANCE {
 
   // Sets heater output based on the information in frame_data
   // The thermal algorithm is a dead zone between the minimum and maximum heater temperature(kMinHeaterTemp and kMaxHeaterTemp)
-  void Microcontroller::SetThermalControl(DataHandler::frame_data_type frame_data) {
+  void Microcontroller::SetThermalControl(DataHandler::frame_data_type &frame_data) {
 
     // Spectrometer heating
     if (frame_data.spectrometer_temperature <= kMinHeaterTemp && !spectrometer_heater_.IsHeaterOn()){
@@ -30,7 +30,7 @@ namespace RADIANCE {
       spectrometer_heater_.CommandHeaterOff();
     }
 
-    frame_data_.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
+    frame_data.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
 
     // Battery heating
     // First average the two battery temperatures
@@ -40,7 +40,7 @@ namespace RADIANCE {
     } else if (avg_battery_temperature >= kMaxHeaterTemp && battery_heater_.IsHeaterOn()) {
       battery_heater_.CommandHeaterOff();
     }
-    frame_data_.battery_heater_status = battery_heater_.IsHeaterOn();
+    frame_data.battery_heater_status = battery_heater_.IsHeaterOn();
 
   }
 
