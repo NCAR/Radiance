@@ -74,7 +74,7 @@ namespace RADIANCE {
 
     //Not sure how to error handle a boolean yet. We'll try just reading
     frame_data_.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
-    frame_data.battery_heater_status = battery_heater_.IsHeaterOn();
+    frame_data_.battery_heater_status = battery_heater_.IsHeaterOn();
     
   }
 
