@@ -17,7 +17,7 @@ namespace RADIANCE {
   // science data struct.
   // In general, if housekeep sensors cannot be read return high heater temperature
   // If science instruments cannot be read return zero
-  void DataHandler::ReadSensorData() {
+  void DataHandler::ReadSensorData(bool spectrometer_heater_status, bool battery_heater_status) {
 
     // Read timestamp measurement
     // This timestamp represents seconds since Unix epoch
@@ -73,8 +73,8 @@ namespace RADIANCE {
     }
 
     //Not sure how to error handle a boolean yet. We'll try just reading
-    //frame_data_.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
-    //frame_data_.battery_heater_status = battery_heater_.IsHeaterOn();
+    frame_data_.spectrometer_heater_status = spectrometer_heater_status;
+    frame_data_.battery_heater_status = battery_heater_status;
     
   }
 

@@ -61,12 +61,12 @@ namespace RADIANCE {
       begin = std::chrono::high_resolution_clock::now();
       //std::cout << "Phil Test Commit" << std::endl;
       // Read all sensors
-      data_handler_.ReadSensorData();
+      data_handler_.ReadSensorData(spectrometer_heater_.IsHeaterOn(), battery_heater_.IsHeaterOn());
 
       // Update the heater output
       Microcontroller::SetThermalControl(data_handler_.GetFrameData());
-      data_handler_.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
-      data_handler_.battery_heater_status = battery_heater_.IsHeaterOn();
+      //data_handler_.spectrometer_heater_status = ;
+      //data_handler_.battery_heater_status = ;
 
       // Write processed data to storage
       data_handler_.WriteFrameToStorage();
