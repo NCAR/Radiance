@@ -30,6 +30,8 @@ namespace RADIANCE {
       spectrometer_heater_.CommandHeaterOff();
     }
 
+    frame_data_.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
+
     // Battery heating
     // First average the two battery temperatures
     float avg_battery_temperature = (frame_data.upper_battery_temperature + frame_data.lower_battery_temperature)/2;
@@ -38,6 +40,7 @@ namespace RADIANCE {
     } else if (avg_battery_temperature >= kMaxHeaterTemp && battery_heater_.IsHeaterOn()) {
       battery_heater_.CommandHeaterOff();
     }
+    frame_data_.battery_heater_status = battery_heater_.IsHeaterOn();
 
   }
 
@@ -56,7 +59,7 @@ namespace RADIANCE {
 
       // Start the clock
       begin = std::chrono::high_resolution_clock::now();
-      std::cout << "Phil Test Commit" << std::endl;
+      //std::cout << "Phil Test Commit" << std::endl;
       // Read all sensors
       data_handler_.ReadSensorData();
 
