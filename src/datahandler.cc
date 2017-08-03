@@ -71,6 +71,10 @@ namespace RADIANCE {
     for(int i = 0; i < 4; ++i){
     	frame_data_.attitude_values[i] = radiance_ads.ads_read(i+1);
     }
+
+    //Not sure how to error handle a boolean yet. We'll try just reading
+    frame_data_.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
+    frame_data.battery_heater_status = battery_heater_.IsHeaterOn();
     
   }
 
@@ -127,6 +131,10 @@ namespace RADIANCE {
       for (auto& i : frame_data_.attitude_values) {
         DataHandler::BinaryWrite(file,i);
       }
+
+      // Write Heater Statuses
+      DataHandler::BinaryWrite(file,frame_data_.spectrometer_heater_status);
+      DataHandler::BinaryWrite(file,frame_data_.battery_heater_status);
 
       file.flush();
     }

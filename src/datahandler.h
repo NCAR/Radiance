@@ -11,6 +11,7 @@
 #include "sensors/humiditysensor.h"
 #include "sensors/attitude.h"
 #include "sensors/camera.h"
+#include "controls/heatercontrol.h"
 
 namespace RADIANCE {
   // DataHandler encapsulates the data transfer process
@@ -42,6 +43,8 @@ namespace RADIANCE {
       float storage_temperature;
       float external_temperature;
       float humidity;
+      bool spectrometer_heater_status;
+      bool battery_heater_status; 
       std::array<float,4> attitude_values;
     };
 
@@ -63,6 +66,9 @@ namespace RADIANCE {
     InternalTemperatureSensor upper_battery_temperature_sensor_{"10-00080336329d"}; // Sensor serial number
     RPiTemperatureSensor rpi_temperature_sensor_;
     Spectrometer spectrometer_;
+    HeaterControl spectrometer_heater_{24};
+    HeaterControl battery_heater_{23};
+
 
     // Storage data objects for regular data
     // These are kept open for performance

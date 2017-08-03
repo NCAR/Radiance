@@ -122,12 +122,11 @@ namespace RADIANCE{
       f_pixelvals[i] = (float) d_pixelvals[i];
     }
 	 
-    std::cout << "Calibration array is: " << std::endl;
-	  
-	for (int i = 0; i <= 2047; i++) 
-    	std::cout << dev_config_.m_Irradiance.m_IntensityCalib.m_aCalibConvers[i] << std::endl;
-	
-  //std::cout << "Calibration time is: " << dev_config_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
+    // This was a test to print out the calibration array for debugging purposes.
+    //std::cout << "Calibration array is: " << std::endl;	  
+    //for (int i = 0; i <= 2047; i++) 
+    //  std::cout << dev_config_.m_Irradiance.m_IntensityCalib.m_aCalibConvers[i] << std::endl;
+    //std::cout << "Calibration time is: " << dev_config_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
 
     return true;
   }
