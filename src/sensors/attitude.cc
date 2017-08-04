@@ -95,7 +95,7 @@ double attitude::ads_read(int pdiode){
 
 	// Get DN
 	dn = (data[0] << 8) | data[1];
-
+	std::cout << dn <<  std::endl;
 	current = dn;
 
 	// Close spi device
