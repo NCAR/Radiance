@@ -91,7 +91,7 @@ double attitude::ads_read(int pdiode){
 		exit(1);
 	}
 
-//	std::cout << "RESULT " << std::bitset<8>((int)data[0]) << " " << std::bitset<8>((int)data[1]) << "\n";
+	std::cout << "RESULT " << std::bitset<8>((int)data[0]) << " " << std::bitset<8>((int)data[1]) << "\n";
 
 	// Get DN
 	dn = (data[0] << 8) | data[1];

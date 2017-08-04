@@ -30,8 +30,8 @@ namespace RADIANCE {
 
   private:
     // Minimum and maximum heater temperatures
-    static constexpr float kMinHeaterTemp = 30;//1
-    static constexpr float kMaxHeaterTemp = 35;//3
+    static constexpr float kMinHeaterTemp = 1;//1
+    static constexpr float kMaxHeaterTemp = 3;//3
 
     // Used to handle input/output of data from reading the sensors to storage
     DataHandler data_handler_;
