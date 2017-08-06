@@ -72,9 +72,12 @@ namespace RADIANCE {
 
     // Storage data objects for regular data
     // These are kept open for performance
-    std::ofstream slc_data_file_{"/mnt/slcdrive/datafile",std::ios::binary|std::ios::app};
-    std::ofstream mlc1_data_file_{"/mnt/mlcdrive1/datafile",std::ios::binary|std::ios::app};
-    std::ofstream mlc2_data_file_{"/mnt/mlcdrive2/datafile",std::ios::binary|std::ios::app};
+    std::string slc_filename_;
+    std::string mlc1_filename_;
+    std::string mlc2_filename_;
+    std::ofstream slc_data_file_;//{"/mnt/slcdrive/datafile",std::ios::binary|std::ios::app};
+    std::ofstream mlc1_data_file_;//{"/mnt/mlcdrive1/datafile",std::ios::binary|std::ios::app};
+    std::ofstream mlc2_data_file_;//{"/mnt/mlcdrive2/datafile",std::ios::binary|std::ios::app};
 
     // Writes the frame data to the given file
     void WriteDataToFile(std::ofstream& file);

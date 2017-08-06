@@ -10,7 +10,6 @@
 #include "datahandler.h"
 #include "microcontroller.h"
 #include "controls/heatercontrol.h"
-
 namespace RADIANCE {
 
   // Reads a measurement from each sensor and places it into the
@@ -88,6 +87,35 @@ namespace RADIANCE {
     }
 
     // Writes the data(measurements) to all three drives every second
+	
+	if (slc_filename_.empty()) {
+		std::chrono::seconds m = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+		unsigned int tsm = m.count();
+		std::string tsmstring = std::to_string(tsm);
+		std::cout << tsmstring;
+		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring;
+		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring;
+		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring;
+		slc_data_file_.open(slc_filename_,std::ios::binary|std::ios::app);
+		mlc1_data_file_.open(mlc1_filename_,std::ios::binary|std::ios::app);
+		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
+	}
+	long file_length = slc_data_file_.tellp();
+	if (file_length > 1000000) {
+		slc_data_file_.close();
+		mlc1_data_file_.close();
+		mlc2_data_file_.close();
+		std::chrono::seconds m = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+		unsigned int tsm = m.count();
+		std::string tsmstring = std::to_string(tsm);
+		std::cout << tsmstring;
+		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring;
+		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring;
+		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring;
+		slc_data_file_.open(slc_filename_,std::ios::binary|std::ios::app);
+		mlc1_data_file_.open(mlc1_filename_,std::ios::binary|std::ios::app);
+		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
+	}			
     WriteDataToFile(slc_data_file_);
     WriteDataToFile(mlc1_data_file_);
     WriteDataToFile(mlc2_data_file_);
