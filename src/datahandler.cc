@@ -101,7 +101,7 @@ namespace RADIANCE {
 		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
 	}
 	long file_length = slc_data_file_.tellp();
-	if (file_length > 1000000) {
+	if (file_length > 10000000) {
 		slc_data_file_.close();
 		mlc1_data_file_.close();
 		mlc2_data_file_.close();

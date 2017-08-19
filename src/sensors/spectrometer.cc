@@ -40,7 +40,7 @@ namespace RADIANCE{
     // Configure the measurement
     meas_config_.m_StartPixel      = 0;
     meas_config_.m_StopPixel       = (kNumPixels - 1);
-    meas_config_.m_IntegrationTime   = 1000;
+    meas_config_.m_IntegrationTime   = 10; //100 for LED, 10 for Sun (ground)
     meas_config_.m_IntegrationDelay    = 0;
     meas_config_.m_NrAverages      = 1;
 

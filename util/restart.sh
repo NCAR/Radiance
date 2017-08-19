@@ -3,7 +3,7 @@
 PROCESS="$1"
 PROCANDARGS=$*
 
-sleep 20
+sleep 21
 
 RESULT=`pgrep ${PROCESS}`
 
