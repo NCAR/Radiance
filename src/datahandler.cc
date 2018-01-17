@@ -10,14 +10,13 @@
 #include "datahandler.h"
 #include "microcontroller.h"
 #include "controls/heatercontrol.h"
-
 namespace RADIANCE {
 
   // Reads a measurement from each sensor and places it into the
   // science data struct.
   // In general, if housekeep sensors cannot be read return high heater temperature
   // If science instruments cannot be read return zero
-  void DataHandler::ReadSensorData() {
+  void DataHandler::ReadSensorData(bool spectrometer_heater_status, bool battery_heater_status) {
 
     // Read timestamp measurement
     // This timestamp represents seconds since Unix epoch
@@ -27,7 +26,7 @@ namespace RADIANCE {
 
     // Read main instrument(spectrometer)
     // If the spectrometer cannot be read from, throw an exception to restart the system
-    if (!spectrometer_.ReadSpectrum(frame_data_.spectrum)) {
+    if (!spectrometer_.ReadSpectrum(frame_data_.spectrum,frame_data_.pixelvals)) {
       throw SystemHaltException();
     }
 
@@ -71,6 +70,10 @@ namespace RADIANCE {
     for(int i = 0; i < 4; ++i){
     	frame_data_.attitude_values[i] = radiance_ads.ads_read(i+1);
     }
+
+    //Not sure how to error handle a boolean yet. We'll try just reading
+    frame_data_.spectrometer_heater_status = spectrometer_heater_status;
+    frame_data_.battery_heater_status = battery_heater_status;
     
   }
 
@@ -84,6 +87,35 @@ namespace RADIANCE {
     }
 
     // Writes the data(measurements) to all three drives every second
+	
+	if (slc_filename_.empty()) {
+		std::chrono::seconds m = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+		unsigned int tsm = m.count();
+		std::string tsmstring = std::to_string(tsm);
+		std::cout << tsmstring;
+		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring;
+		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring;
+		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring;
+		slc_data_file_.open(slc_filename_,std::ios::binary|std::ios::app);
+		mlc1_data_file_.open(mlc1_filename_,std::ios::binary|std::ios::app);
+		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
+	}
+	long file_length = slc_data_file_.tellp();
+	if (file_length > 10000000) {
+		slc_data_file_.close();
+		mlc1_data_file_.close();
+		mlc2_data_file_.close();
+		std::chrono::seconds m = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
+		unsigned int tsm = m.count();
+		std::string tsmstring = std::to_string(tsm);
+		std::cout << tsmstring;
+		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring;
+		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring;
+		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring;
+		slc_data_file_.open(slc_filename_,std::ios::binary|std::ios::app);
+		mlc1_data_file_.open(mlc1_filename_,std::ios::binary|std::ios::app);
+		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
+	}			
     WriteDataToFile(slc_data_file_);
     WriteDataToFile(mlc1_data_file_);
     WriteDataToFile(mlc2_data_file_);
@@ -104,10 +136,16 @@ namespace RADIANCE {
       // Write timestamp of measurement
       DataHandler::BinaryWrite(file,frame_data_.time_stamp);
 
-      // Write the spectrometer measurements
+      // Write the spectrometer lambda measurements
       for (auto& i : frame_data_.spectrum) {
         DataHandler::BinaryWrite(file,i);
       }
+      
+       // Write the spectrometer pixelval measurements
+      for (auto& i : frame_data_.pixelvals) {
+        DataHandler::BinaryWrite(file,i);
+      }
+      
       // Write the engineering/housekeeping measurements to the given file
       DataHandler::BinaryWrite(file,frame_data_.spectrometer_temperature);
       DataHandler::BinaryWrite(file,frame_data_.rpi_temperature);
@@ -121,6 +159,10 @@ namespace RADIANCE {
       for (auto& i : frame_data_.attitude_values) {
         DataHandler::BinaryWrite(file,i);
       }
+
+      // Write Heater Statuses
+      DataHandler::BinaryWrite(file,frame_data_.spectrometer_heater_status);
+      DataHandler::BinaryWrite(file,frame_data_.battery_heater_status);
 
       file.flush();
     }

@@ -16,6 +16,9 @@ double attitude::ads_read(int pdiode){
 	unsigned char data[2];
 	data[0] = 0;
 	data[1] = 0;
+	unsigned char dataout[2];
+	dataout[0] = 0;
+	dataout[1] = 0;
 
 	// Misc variables and result
 	int retVal = -1;
@@ -25,7 +28,7 @@ double attitude::ads_read(int pdiode){
 
 
 	// Construct message
-	spi.tx_buf 				= (unsigned long)data;
+	spi.tx_buf 				= (unsigned long)dataout;
 	spi.rx_buf 				= (unsigned long)data;
 	spi.len 				= this->len;
 	spi.delay_usecs 			= this->delay;
@@ -40,19 +43,19 @@ double attitude::ads_read(int pdiode){
 		// Set necessary CS pin low to make corresponding ADC listen
 		// Also set feedback resistance
 		if(pdiode == 1){
-			gpioWrite(8, 0);
+			std::cout << gpioWrite(8, 0);
 			rf = this->rf1;
 		}
 		else if(pdiode == 2){
-			gpioWrite(7, 0);
+			std::cout << gpioWrite(7, 0);
 			rf = this->rf2;
 		}
 		else if(pdiode == 3){
-			gpioWrite(20, 0);
+			std::cout << gpioWrite(20, 0);
 			rf = this->rf3;
 		}
 		else if(pdiode == 4){
-			gpioWrite(21, 0);
+			std::cout << gpioWrite(21, 0);
 			rf = this->rf4;
 		}
 
@@ -66,23 +69,23 @@ double attitude::ads_read(int pdiode){
 //		std::cout << "spi.len = " << spi.len << "\n";
 
 		// Wait 4 ms for conversion
-		usleep(4000);
+		usleep(12000);
 
 		// Send message
 		retVal = ioctl(spifd, SPI_IOC_MESSAGE(1), &spi);
 
 		// Set necessary CS pin high again
 		if(pdiode == 1){
-			gpioWrite(8, 1);
+			std::cout << gpioWrite(8, 1);
 		}
 		else if(pdiode == 2){
-			gpioWrite(7, 1);
+			std::cout << gpioWrite(7, 1);
 		}
 		else if(pdiode == 3){
-			gpioWrite(20, 1);
+			std::cout << gpioWrite(20, 1);
 		}
 		else if(pdiode == 4){
-			gpioWrite(21, 1);
+			std::cout << gpioWrite(21, 1);
 		}
 
 
@@ -91,11 +94,11 @@ double attitude::ads_read(int pdiode){
 		exit(1);
 	}
 
-//	std::cout << "RESULT " << std::bitset<8>((int)data[0]) << " " << std::bitset<8>((int)data[1]) << "\n";
+	std::cout << "RESULT " << pdiode << " " << std::bitset<8>((int)data[0]) << " " << std::bitset<8>((int)data[1]) << "\n";
 
 	// Get DN
 	dn = (data[0] << 8) | data[1];
-
+	std::cout << dn <<  std::endl;
 	current = dn;
 
 	// Close spi device
@@ -118,6 +121,7 @@ int attitude::spiOpen(){
 	// Open spidev device
 	spifd = open("/dev/spidev0.0", O_RDWR);
 	if(spifd < 0){
+		std::cout << "could not open SPI";
 		perror("could not open SPI device");
 		exit(1);
 	}

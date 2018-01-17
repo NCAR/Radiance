@@ -11,6 +11,7 @@
 #include "sensors/humiditysensor.h"
 #include "sensors/attitude.h"
 #include "sensors/camera.h"
+//#include "controls/heatercontrol.h"
 
 namespace RADIANCE {
   // DataHandler encapsulates the data transfer process
@@ -25,7 +26,7 @@ namespace RADIANCE {
     
     // Reads a measurement from each sensor and places it into the
     // science data struct.
-    void ReadSensorData();
+    void ReadSensorData(bool spectrometer_heater_status, bool battery_heater_status);
 
     // Writes the science data struct to storage
     void WriteFrameToStorage();
@@ -34,6 +35,7 @@ namespace RADIANCE {
     struct frame_data_type {
       unsigned int time_stamp;
       std::array<float,Spectrometer::kNumPixels> spectrum;
+      std::array<float,Spectrometer::kNumPixels> pixelvals;
       float spectrometer_temperature;
       float rpi_temperature;
       float upper_battery_temperature;
@@ -41,6 +43,8 @@ namespace RADIANCE {
       float storage_temperature;
       float external_temperature;
       float humidity;
+      bool spectrometer_heater_status;
+      bool battery_heater_status; 
       std::array<float,4> attitude_values;
     };
 
@@ -62,12 +66,18 @@ namespace RADIANCE {
     InternalTemperatureSensor upper_battery_temperature_sensor_{"10-00080336329d"}; // Sensor serial number
     RPiTemperatureSensor rpi_temperature_sensor_;
     Spectrometer spectrometer_;
+    //HeaterControl spectrometer_heater_{24};
+    //HeaterControl battery_heater_{23};
+
 
     // Storage data objects for regular data
     // These are kept open for performance
-    std::ofstream slc_data_file_{"/mnt/slcdrive/datafile",std::ios::binary|std::ios::app};
-    std::ofstream mlc1_data_file_{"/mnt/mlcdrive1/datafile",std::ios::binary|std::ios::app};
-    std::ofstream mlc2_data_file_{"/mnt/mlcdrive2/datafile",std::ios::binary|std::ios::app};
+    std::string slc_filename_;
+    std::string mlc1_filename_;
+    std::string mlc2_filename_;
+    std::ofstream slc_data_file_;//{"/mnt/slcdrive/datafile",std::ios::binary|std::ios::app};
+    std::ofstream mlc1_data_file_;//{"/mnt/mlcdrive1/datafile",std::ios::binary|std::ios::app};
+    std::ofstream mlc2_data_file_;//{"/mnt/mlcdrive2/datafile",std::ios::binary|std::ios::app};
 
     // Writes the frame data to the given file
     void WriteDataToFile(std::ofstream& file);

@@ -1,6 +1,7 @@
 #include <math.h>
 #include <chrono>
 #include <iostream>
+#include <sstream> //possibly remove
 #include <thread>
 #include <stdexcept>
 #include <pigpio.h>
@@ -15,7 +16,7 @@ namespace RADIANCE {
   Microcontroller::Microcontroller() {
     // Set terminate handler to custom restart function
     // This will restart the pi if an unknown exception occurs
-    // std::set_terminate(SystemHaltException::RestartSystem);
+    std::set_terminate(SystemHaltException::RestartSystem);
   }
 
   // Sets heater output based on the information in frame_data
@@ -29,6 +30,8 @@ namespace RADIANCE {
       spectrometer_heater_.CommandHeaterOff();
     }
 
+    //frame_data.spectrometer_heater_status = spectrometer_heater_.IsHeaterOn();
+
     // Battery heating
     // First average the two battery temperatures
     float avg_battery_temperature = (frame_data.upper_battery_temperature + frame_data.lower_battery_temperature)/2;
@@ -37,6 +40,7 @@ namespace RADIANCE {
     } else if (avg_battery_temperature >= kMaxHeaterTemp && battery_heater_.IsHeaterOn()) {
       battery_heater_.CommandHeaterOff();
     }
+    //frame_data.battery_heater_status = battery_heater_.IsHeaterOn();
 
   }
 
@@ -55,12 +59,14 @@ namespace RADIANCE {
 
       // Start the clock
       begin = std::chrono::high_resolution_clock::now();
-
+      //std::cout << "Phil Test Commit" << std::endl;
       // Read all sensors
-      data_handler_.ReadSensorData();
+      data_handler_.ReadSensorData(spectrometer_heater_.IsHeaterOn(), battery_heater_.IsHeaterOn());
 
       // Update the heater output
       Microcontroller::SetThermalControl(data_handler_.GetFrameData());
+      //data_handler_.spectrometer_heater_status = ;
+      //data_handler_.battery_heater_status = ;
 
       // Write processed data to storage
       data_handler_.WriteFrameToStorage();
@@ -69,7 +75,10 @@ namespace RADIANCE {
       end = std::chrono::high_resolution_clock::now();
       std::chrono::duration<float> fs = end - begin;
       std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(fs);
-      std::cout << "Milliseconds taken: " << ms.count() << std::endl; // DEBUG
+      std::ostream stream(nullptr); //test
+      stream.rdbuf(std::cout.rdbuf()); //test
+      stream << "Milliseconds taken: " << ms.count() << std::endl; // DEBUG
+	  //test test!!!!!
 
       // Sleep, if necessary
       // This reduces the chance that too much data will be taken on the storage

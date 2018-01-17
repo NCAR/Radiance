@@ -34,7 +34,7 @@ public:
 private:
 
 	// SPI settings
-	const unsigned char mode = SPI_MODE_3;
+	const unsigned char mode = SPI_MODE_0;//was 3
 	const uint8_t bitsPerWord = 8;
 	const uint8_t cs = 1;
 	const uint32_t speed = 1000000;

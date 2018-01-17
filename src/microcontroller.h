@@ -3,6 +3,7 @@
 
 #include "datahandler.h"
 #include "controls/heatercontrol.h"
+#include "sensors/spectrometer.h"
 
 namespace RADIANCE {
   // Controls the RADIANCE software. Encapsulates the command
@@ -29,8 +30,8 @@ namespace RADIANCE {
 
   private:
     // Minimum and maximum heater temperatures
-    static constexpr float kMinHeaterTemp = 1;
-    static constexpr float kMaxHeaterTemp = 3;
+    static constexpr float kMinHeaterTemp = 1;//1
+    static constexpr float kMaxHeaterTemp = 3;//3
 
     // Used to handle input/output of data from reading the sensors to storage
     DataHandler data_handler_;

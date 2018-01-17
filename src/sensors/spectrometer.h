@@ -12,9 +12,12 @@ namespace RADIANCE {
 
     // Number of spectrometer elements
     static const int kNumPixels = 2048;
+	  
+	//test test!!
+	bool CalibTest();
 
-    // Return a spectrum measurement into the given array
-    bool ReadSpectrum(std::array<float,kNumPixels>& spectrum);
+    // Return a spectrum and pixelvalue measurement into the given array
+    bool ReadSpectrum(std::array<float,kNumPixels>& spectrum, std::array<float,kNumPixels>& pixelvals);
 
     // Return spectrometer temperature
     // Returns false if read failed
@@ -27,9 +30,13 @@ namespace RADIANCE {
     // Spectrometer measurement config
     MeasConfigType meas_config_;
 
+	//Spectrometer device config
+	DeviceConfigType dev_config_;
+	  
+	  
     // Converts the voltage into a temperature
     float ConvertVoltageToTemperature(float voltage);
-
+	  
   };
 
 } // namespace RADIANCE
