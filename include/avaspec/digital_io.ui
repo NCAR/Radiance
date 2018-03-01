@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>digital_io</class>
+ <widget class="QDialog" name="digital_io">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>556</width>
+    <height>562</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Test Digital IO</string>
+  </property>
+  <widget class="QPushButton" name="okButton">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>520</y>
+     <width>77</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>521</width>
+     <height>341</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Digital Outputs</string>
+   </property>
+   <widget class="QCheckBox" name="DO1Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>40</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO1</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO2Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>70</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO2</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO3Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>100</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO3</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO4Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>130</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO4</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO5Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>160</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO5</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO6Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>190</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO6</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO7Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>220</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO7</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO8Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>250</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO8</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO9Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>280</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO9</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DO10Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>310</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DO10</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PWM1Chk">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>40</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PWM</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PWM2Chk">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>70</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PWM</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PWM3Chk">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>100</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PWM</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PWM5Chk">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>160</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PWM</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PWM6Chk">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>190</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PWM</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="PWM7Chk">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>220</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PWM</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="DutyCycle1Edt">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>40</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="DutyCycle2Edt">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>70</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="DutyCycle3Edt">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>100</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="DutyCycle5Edt">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>160</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="DutyCycle6Edt">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>190</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="DutyCycle7Edt">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>220</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Frequency123Edt">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>60</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="Frequency567Edt">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>180</y>
+      <width>51</width>
+      <height>41</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>20</y>
+      <width>91</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DutyCycle [%]</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>20</y>
+      <width>121</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Frequency (500-300000 Hz)</string>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 11</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 2</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>100</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 20</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 12</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>160</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>190</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 21</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>220</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 13</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>250</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 4</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>280</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 22</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_12">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>310</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 25</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>380</y>
+     <width>521</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Digital Inputs</string>
+   </property>
+   <widget class="QPushButton" name="GetDigitalInputsBtn">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>60</y>
+      <width>111</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Get Digital Inputs</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DI1Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>30</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DI1</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DI2Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>60</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DI2</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="DI3Chk">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>90</y>
+      <width>72</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DI3</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_13">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 24</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_14">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 7</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_15">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>46</width>
+      <height>14</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pin 16</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <tabstops>
+  <tabstop>DO1Chk</tabstop>
+  <tabstop>DO2Chk</tabstop>
+  <tabstop>DO3Chk</tabstop>
+  <tabstop>DO4Chk</tabstop>
+  <tabstop>DO5Chk</tabstop>
+  <tabstop>DO6Chk</tabstop>
+  <tabstop>DO7Chk</tabstop>
+  <tabstop>DO8Chk</tabstop>
+  <tabstop>DO9Chk</tabstop>
+  <tabstop>DO10Chk</tabstop>
+  <tabstop>PWM1Chk</tabstop>
+  <tabstop>PWM2Chk</tabstop>
+  <tabstop>PWM3Chk</tabstop>
+  <tabstop>PWM5Chk</tabstop>
+  <tabstop>PWM6Chk</tabstop>
+  <tabstop>PWM7Chk</tabstop>
+  <tabstop>DutyCycle1Edt</tabstop>
+  <tabstop>DutyCycle2Edt</tabstop>
+  <tabstop>DutyCycle3Edt</tabstop>
+  <tabstop>DutyCycle5Edt</tabstop>
+  <tabstop>DutyCycle6Edt</tabstop>
+  <tabstop>DutyCycle7Edt</tabstop>
+  <tabstop>Frequency123Edt</tabstop>
+  <tabstop>Frequency567Edt</tabstop>
+  <tabstop>DI1Chk</tabstop>
+  <tabstop>DI2Chk</tabstop>
+  <tabstop>DI3Chk</tabstop>
+  <tabstop>GetDigitalInputsBtn</tabstop>
+  <tabstop>okButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>okButton</sender>
+   <signal>clicked()</signal>
+   <receiver>digital_io</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>278</x>
+     <y>253</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>96</x>
+     <y>254</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>
