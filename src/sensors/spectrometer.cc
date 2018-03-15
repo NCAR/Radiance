@@ -54,7 +54,8 @@ namespace RADIANCE{
     meas_config_.m_Smoothing.m_SmoothModel = 0; // Only one model available(0)
 
     // Saturation Detection
-    meas_config_.m_SaturationDetection = 0; // Saturation detection, 0 is disabled
+    // SATURATION DETECTION CHANGED TO 1 FOR TESTING PURPOSES
+    meas_config_.m_SaturationDetection = 1; // Saturation detection, 0 is disabled
 
     // Trigger modes
     meas_config_.m_Trigger.m_Mode    = 0; // Mode, 0 is software
@@ -121,6 +122,40 @@ namespace RADIANCE{
     for (int i=0; i < kNumPixels; i++) {
       f_pixelvals[i] = (float) d_pixelvals[i];
     }
+
+    // BEGINNING OF SATURATION TEST CODE
+    unsigned char satValues[kNumPixels];     // Array to store output values
+    bool satOccurred = false;       // Flag to determine if saturation has occurred
+
+    // Fill satValues array with 0's and 1's?
+    if(AVS_GetSaturatedPixels(handle_, satValues)!=ERR_SUCCESS) {
+      std::cerr << "Err in GetSaturatedPixels" << std::endl;
+      return false;
+    }
+
+    // Check if any pixels were saturated, if they were set flag
+    for (int i=0; i < kNumPixels; i++) {
+    	if(satValues[i]) {
+    		satOccurred = true;
+    	}
+    }
+
+    // If saturation occurred, lower exposure time
+    if(satOccured) {
+    	// Minimum exposure time is 1.05ms, cut off at 1.5 to avoid issues
+    	if(meas_config_.m_IntegrationTime > 1.5) {
+    		meas_config_.m_IntegrationTime -= 0.5;    // Decrease exposure time by 0.5ms
+    	}
+    }
+
+    // If saturation didn't occur, increase exposure time
+    else {
+    	// Arbitrary max of 20 to avoid exposure time getting too large
+    	if(meas_config_.m_IntegrationTime < 20) {
+    		meas_config_.m_IntegrationTime += 0.5;    // Increase exposure time by 0.5ms
+    	}
+    }
+    // END OF PIXEL SATURATION TEST CODE
 	 
     // This was a test to print out the calibration array for debugging purposes.
     //std::cout << "Calibration array is: " << std::endl;	  
