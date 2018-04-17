@@ -12,12 +12,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-def getFiles():
+def getFiles(directory):
     #files = "C:\\HAO-IG\\DIMS\\Software\\Data\\sun_angled\\"
     #files = "C:\\HAO-IG\\DIMS\\Software\\Data\\datafile_7-12-2017_1000ms"
     #directory = "C:\\HAO-IG\\DIMS\\Software\\Data\\omega_thermal_vac\\"
-    directory = "C:\\HAO-IG\\DIMS\\Software\\Data\\8-28-2017\\"
-    files=os.listdir(directory)
+    
+    allfiles=os.listdir(directory)
+    files = [onefile for onefile in allfiles if onefile.endswith(".dat")]
     files = [directory + s for s in files]    
     return(files)    
 
@@ -128,12 +129,9 @@ def extractData():
 
 def plotTemperatures(data,ax):
     
-    heater_on = 19#1   
-    heater_off = 21#3    
+    heater_on = 1   
+    heater_off = 3    
     times = data['times']
-    #times=np.array(times - times[0]) 
-    #nonzero=np.where(times>0)
-    #timelimits = data['times'][nonzero]
     ax.plot(data['times'],data['spec_temp'],label='Spectrometer Temperature')
     ax.plot(data['times'],data['computer_temp'],label='Computer Temperature')
     ax.plot(data['times'],data['battery1_temp'],label='Battery 1 Temperature')
@@ -149,14 +147,9 @@ def plotTemperatures(data,ax):
     ax.set_xlabel("Time [s]")
     ax.set_ylabel("Temperature [C]")
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
-
-  
-    
-    #dataplot = data.Series(data['spec_temp'])
-    #xx=np.array(data['spec_temp'])
-    #plt.plot(xx)
-    #data.plot(x='spec_temp',y='spec_temp')    
-    
+    ax.set_xlim(left=0)
+    ax.grid(True) 
+   
 
     
 def plotADS(data,ax):
@@ -167,6 +160,8 @@ def plotADS(data,ax):
     ax.plot(data['times'],data['ads4'],label='ADS 4')  
     ax.set_xlabel("Time [s]")
     ax.set_ylabel("ADS Value")
+    ax.set_xlim(left=0)
+    ax.grid(True)
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=4, mode="expand", borderaxespad=0.)
     
     
@@ -197,11 +192,12 @@ def plotSpectrum(data,wavelength,spectrum,timeToPlot,ax,axx):
     plt.subplots_adjust(hspace=0.5)
     axx.grid(True)    
     axx.plot(wavelength[whichspectrum,:],spectrum[whichspectrum,:],'b')
+    axx.set_title("Selected Spectrum (time = "+str(timeToPlot) + "s)")
     axx.set_xlabel("Wavelength [nm]")
     axx.set_ylabel("Counts")
     axx.set_xlim([200,1000])
     #axx.set_ylim([0,np.amax(spectrum[whichspectrum,:])*1.05])
-    axx.set_ylim([0,65536])
+    axx.set_ylim([0,np.amax(spectrum[whichspectrum,:])*1.05])
     #ax2.plot(wavelength[whichspectrum,:],rmsNoise,'b',label="Measured")
     #ax2.plot(wavelength[whichspectrum,:],poissonNoise,'r',label="Expected")
     #ax2.legend()
@@ -211,14 +207,23 @@ def plotSpectrum(data,wavelength,spectrum,timeToPlot,ax,axx):
 
     #fig,(ax1)=plt.subplots(1,1)
 
-    ax.plot(data['times'],np.amax(spectrum,axis=1),'r')    
+    ax.plot(data['times'],np.amax(spectrum,axis=1),'r',label="Peak Counts per Spectrum")    
 
     
-    ax.plot([data['times'][whichspectrum],data['times'][whichspectrum]],[0,65000],'b')
+    ax.plot([data['times'][whichspectrum],data['times'][whichspectrum]],[0,65000],'b',label="Selected Spectrum")
     #ax3.set_xlim([np.amin(timelimits),np.amax(timelimits)])
     ax.set_xlabel("Time [s]")
     ax.set_ylabel("Peak Counts")
+    ax.set_xlim(left=0)
     ax.set_ylim([0,np.amax(spectrum)*1.05])
+    ax.yaxis.label.set_color('red')
+    ax.tick_params(axis='y',colors='red')
+    axy2 = ax.twinx()
+    axy2.plot(data['times'],data['exposure'],'--g',label="Exposure Time")
+    axy2.set_ylabel("Exposure Times [ms]")
+    axy2.yaxis.label.set_color('green')
+    axy2.tick_params(axis='y',colors='green')
+    axy2.set_ylim([0,np.amax(data['exposure'])*1.05])
     ax.grid(True)
    
 def calibrateIrradiance(wavelength, spectrum,ax1):
@@ -249,17 +254,23 @@ def saveData():
 
 
 def main():
-    timeToPlot = 10
-    files = getFiles()
+    
+    #====================================INPUTS====================================
+    directory = "C:\\HAO-IG\\DIMS\\Software\\Data\\4-12-2018\\"
+    timeToPlot = 500
+    #====================================INPUTS====================================
+
+
+    files = getFiles(directory)
     data,wavelength,spectrum = getData(files)
     extractData()
 
-    #fig,((ax1,ax3),(ax2,ax4))=plt.subplots(2,2)
     fig = plt.subplots()
     ax1=plt.subplot(321)
     ax2=plt.subplot(323)
     ax3=plt.subplot(325)
     ax4=plt.subplot(122)
+    
     plotTemperatures(data,ax1)
     plotADS(data,ax2)
     #fig,(ax1,ax2,ax3)=plt.subplots(3,1)
@@ -268,7 +279,6 @@ def main():
     #irradiance = spectrum    
     plotSpectrum(data,wavelength,spectrum,timeToPlot,ax3,ax4)
     saveData()
-
 
 if __name__ == "__main__":
     main()
