@@ -12,7 +12,12 @@ namespace RADIANCE {
 
     // Number of spectrometer elements
     static const int kNumPixels = 2048;
-	  
+
+    // TEST!! FLAG FOR CALIBRATING SPECTROMETER (still need a way to reset this)
+    bool calibrated = false;
+    float intTime;
+    void resetIntegrationTimeCalibration();
+
 	//test test!!
 	bool CalibTest();
 
