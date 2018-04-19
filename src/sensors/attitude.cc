@@ -43,19 +43,19 @@ double attitude::ads_read(int pdiode){
 		// Set necessary CS pin low to make corresponding ADC listen
 		// Also set feedback resistance
 		if(pdiode == 1){
-			std::cout << gpioWrite(8, 0);
+//			std::cout << gpioWrite(8, 0);
 			rf = this->rf1;
 		}
 		else if(pdiode == 2){
-			std::cout << gpioWrite(7, 0);
+//			std::cout << gpioWrite(7, 0);
 			rf = this->rf2;
 		}
 		else if(pdiode == 3){
-			std::cout << gpioWrite(20, 0);
+//			std::cout << gpioWrite(20, 0);
 			rf = this->rf3;
 		}
 		else if(pdiode == 4){
-			std::cout << gpioWrite(21, 0);
+//			std::cout << gpioWrite(21, 0);
 			rf = this->rf4;
 		}
 
@@ -76,16 +76,16 @@ double attitude::ads_read(int pdiode){
 
 		// Set necessary CS pin high again
 		if(pdiode == 1){
-			std::cout << gpioWrite(8, 1);
+//			std::cout << gpioWrite(8, 1);
 		}
 		else if(pdiode == 2){
-			std::cout << gpioWrite(7, 1);
+//			std::cout << gpioWrite(7, 1);
 		}
 		else if(pdiode == 3){
-			std::cout << gpioWrite(20, 1);
+//			std::cout << gpioWrite(20, 1);
 		}
 		else if(pdiode == 4){
-			std::cout << gpioWrite(21, 1);
+//			std::cout << gpioWrite(21, 1);
 		}
 
 
@@ -94,11 +94,11 @@ double attitude::ads_read(int pdiode){
 		exit(1);
 	}
 
-	std::cout << "RESULT " << pdiode << " " << std::bitset<8>((int)data[0]) << " " << std::bitset<8>((int)data[1]) << "\n";
+//	std::cout << "RESULT " << pdiode << " " << std::bitset<8>((int)data[0]) << " " << std::bitset<8>((int)data[1]) << "\n";
 
 	// Get DN
 	dn = (data[0] << 8) | data[1];
-	std::cout << dn <<  std::endl;
+//	std::cout << dn <<  std::endl;
 	current = dn;
 
 	// Close spi device
