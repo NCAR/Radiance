@@ -40,7 +40,7 @@ namespace RADIANCE{
     // Configure the measurement
     meas_config_.m_StartPixel      = 0;
     meas_config_.m_StopPixel       = (kNumPixels - 1);
-    meas_config_.m_IntegrationTime   = 10; //100 for LED, 10 for Sun (ground)
+    meas_config_.m_IntegrationTime   = 1.5; //100 for LED, 10 for Sun (ground)
     meas_config_.m_IntegrationDelay    = 0;
     meas_config_.m_NrAverages      = 1;
 
@@ -69,7 +69,14 @@ namespace RADIANCE{
     meas_config_.m_Control.m_LaserWaveLength = 1; // Peak wavelength of laser(nm), used for Raman spectroscopy
     meas_config_.m_Control.m_StoreToRam      = 0; // Number of spectra to be store to RAM
   }
-		
+
+  // TEST FUNCTION TO RESET INTEGRATION TIME CALIBRATION
+  void Spectrometer::resetIntegrationTimeCalibration() {
+      calibrated = false;
+      intTime = 1.5;
+      meas_config_.m_IntegrationTime = intTime;
+  }
+  // END OF TEST FUNCTION
 
   // Reads the spectrum with the setup handle. First calls AVS_Measure
   // which starts the read and then waits until a spectrum is
@@ -124,42 +131,54 @@ namespace RADIANCE{
     }
 
     // BEGINNING OF SATURATION TEST CODE
-    unsigned char satValues[kNumPixels];     // Array to store output values
-    bool satOccurred = false;       // Flag to determine if saturation has occurred
+    if(!calibrated) {
+        unsigned char satValues[kNumPixels];     // Array to store output values
+        bool satOccurred = false;                // Flag to determine if saturation has occurred
 
-    // Fill satValues array with 0's and 1's?
-    if(AVS_GetSaturatedPixels(handle_, satValues)!=ERR_SUCCESS) {
-      std::cerr << "Err in GetSaturatedPixels" << std::endl;
-      return false;
-    }
+        // Fill satValues array with 0's and 1's?
+        if(AVS_GetSaturatedPixels(handle_, satValues)!=ERR_SUCCESS) {
+          std::cerr << "Err in GetSaturatedPixels" << std::endl;
+          return false;
+        }
 
-    // Check if any pixels were saturated, if they were set flag
-    for (int i=0; i < kNumPixels; i++) {
-    	if(satValues[i]) {
+   	 // Check if any pixels were saturated, if they were set flag
+    	for (int i=0; i < kNumPixels; i++) {
+            if(satValues[i]) {
     		satOccurred = true;
-    	}
-    }
+    	    }
+        }
 
-    // If saturation occurred, lower exposure time
-    if(satOccured) {
-    	// Minimum exposure time is 1.05ms, cut off at 1.5 to avoid issues
-    	if(meas_config_.m_IntegrationTime > 1.5) {
-    		meas_config_.m_IntegrationTime -= 0.5;    // Decrease exposure time by 0.5ms
-    	}
-    }
+    	// If saturation occurred, set the final calibrated value
+    	if(satOccurred) {
+    	    // Set integration to 80% of time at which saturation occurred
+	    meas_config_.m_IntegrationTime = meas_config_.m_IntegrationTime * 0.8;
 
-    // If saturation didn't occur, increase exposure time
-    else {
-    	// Arbitrary max of 20 to avoid exposure time getting too large
-    	if(meas_config_.m_IntegrationTime < 20) {
-    		meas_config_.m_IntegrationTime += 0.5;    // Increase exposure time by 0.5ms
-    	}
+	    // Check that integration time didn't go below 1.5ms
+	    if(meas_config_.m_IntegrationTime < 1.5) {
+		meas_config_.m_IntegrationTime = 1.5;
+	    }
+
+	    // Set flag to indicate that calibration is complete
+	    calibrated = true;
+        }
+
+        // If saturation didn't occur, the calibration is still ongoing so increase integration time 0.5ms
+        else {
+    	    meas_config_.m_IntegrationTime += 0.5;
+        }
+
+	// Set the public integration time to the private integration time
+	intTime = meas_config_.m_IntegrationTime;
+
+	// Output debugging information during calibration
+        std::cout << "satOccurred: " << satOccurred << "\n";
+        std::cout << "Integration Time: " << intTime << "\n";
     }
     // END OF PIXEL SATURATION TEST CODE
-	 
+
     // This was a test to print out the calibration array for debugging purposes.
-    //std::cout << "Calibration array is: " << std::endl;	  
-    //for (int i = 0; i <= 2047; i++) 
+    //std::cout << "Calibration array is: " << std::endl;
+    //for (int i = 0; i <= 2047; i++)
     //  std::cout << dev_config_.m_Irradiance.m_IntensityCalib.m_aCalibConvers[i] << std::endl;
     //std::cout << "Calibration time is: " << dev_config_.m_Irradiance.m_IntensityCalib.m_Callnttime << std::endl;
 
