@@ -35,7 +35,7 @@ namespace RADIANCE {
       camera_.TakePicture(frame_data_.time_stamp);
 
     // Read temperature sensors
-    // These sensors are used for heater control. Overheating is a concern, so 
+    // These sensors are used for heater control. Overheating is a concern, so
     // if the sensors are not responding, assume sensor is already at desired temperature
     if (!spectrometer_.ReadSpectrometerTemperature(frame_data_.spectrometer_temperature)) {
       frame_data_.spectrometer_temperature = Microcontroller::GetMaxHeaterTemp();
@@ -74,7 +74,7 @@ namespace RADIANCE {
     //Not sure how to error handle a boolean yet. We'll try just reading
     frame_data_.spectrometer_heater_status = spectrometer_heater_status;
     frame_data_.battery_heater_status = battery_heater_status;
-    
+
   }
 
   // Writes the frame data to a csv file
@@ -87,15 +87,15 @@ namespace RADIANCE {
     }
 
     // Writes the data(measurements) to all three drives every second
-	
+
 	if (slc_filename_.empty()) {
 		std::chrono::seconds m = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch());
 		unsigned int tsm = m.count();
 		std::string tsmstring = std::to_string(tsm);
 		std::cout << tsmstring;
-		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring;
-		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring;
-		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring;
+		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring + ".dat";
+		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring + ".dat";
+		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring + ".dat";
 		slc_data_file_.open(slc_filename_,std::ios::binary|std::ios::app);
 		mlc1_data_file_.open(mlc1_filename_,std::ios::binary|std::ios::app);
 		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
@@ -109,13 +109,16 @@ namespace RADIANCE {
 		unsigned int tsm = m.count();
 		std::string tsmstring = std::to_string(tsm);
 		std::cout << tsmstring;
-		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring;
-		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring;
-		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring;
+		slc_filename_ = "/mnt/slcdrive/datafile_" + tsmstring + ".dat";
+		mlc1_filename_ = "/mnt/mlcdrive1/datafile_" + tsmstring + ".dat";
+		mlc2_filename_ = "/mnt/mlcdrive2/datafile_" + tsmstring + ".dat";
 		slc_data_file_.open(slc_filename_,std::ios::binary|std::ios::app);
 		mlc1_data_file_.open(mlc1_filename_,std::ios::binary|std::ios::app);
 		mlc2_data_file_.open(mlc2_filename_,std::ios::binary|std::ios::app);
-	}			
+		// TEST CODE FOR CALIBRATING INTEGRATION TIME
+		spectrometer_.resetIntegrationTimeCalibration(); // Reset integration time
+		// END OF TEST CODE BLOCK 1
+	}
     WriteDataToFile(slc_data_file_);
     WriteDataToFile(mlc1_data_file_);
     WriteDataToFile(mlc2_data_file_);
@@ -132,7 +135,7 @@ namespace RADIANCE {
     // Check that the data file is OK
     // If not OK, do nothing
     if (file.good()) {
-    
+
       // Write timestamp of measurement
       DataHandler::BinaryWrite(file,frame_data_.time_stamp);
 
@@ -140,12 +143,12 @@ namespace RADIANCE {
       for (auto& i : frame_data_.spectrum) {
         DataHandler::BinaryWrite(file,i);
       }
-      
+
        // Write the spectrometer pixelval measurements
       for (auto& i : frame_data_.pixelvals) {
         DataHandler::BinaryWrite(file,i);
       }
-      
+
       // Write the engineering/housekeeping measurements to the given file
       DataHandler::BinaryWrite(file,frame_data_.spectrometer_temperature);
       DataHandler::BinaryWrite(file,frame_data_.rpi_temperature);
@@ -154,6 +157,9 @@ namespace RADIANCE {
       DataHandler::BinaryWrite(file,frame_data_.storage_temperature);
       DataHandler::BinaryWrite(file,frame_data_.external_temperature);
       DataHandler::BinaryWrite(file,frame_data_.humidity);
+      // TEST CODE TO OUTPUT INTEGRATION TIME TO DATAFILE
+      DataHandler::BinaryWrite(file, spectrometer_.intTime);
+      // END OF TEST CODE BLOCK 2
 
       // Write the attitude measurements
       for (auto& i : frame_data_.attitude_values) {
