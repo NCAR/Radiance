@@ -99,6 +99,7 @@ def getData(files):
                 slc_temp[cycleCount], = (struct.unpack('f',f.read(4)))
                 env_temp[cycleCount], = (struct.unpack('f',f.read(4)))
                 env_hum[cycleCount], = (struct.unpack('f',f.read(4)))
+                
                 exposure[cycleCount], = (struct.unpack('f',f.read(4)))
     
                 ads1[cycleCount], = (struct.unpack('f',f.read(4)))
@@ -120,8 +121,10 @@ def getData(files):
             #wavelength = np.asarray(wavelength)        
             #spec_temp = spec_temp[1:]
             #spec_temp = np.array(spec_temp)
+    plt.plot(bat2_temp)
     dataStructure = {'timestamp':timestamp,'times':times,'spec_temp':spec_temp,'computer_temp':rpi_temp,'battery1_temp':bat1_temp,'battery2_temp':bat2_temp,'slc_temp':slc_temp,'env_temp':env_temp,'env_hum':env_hum,'exposure':exposure,'ads1':ads1,'ads2':ads2,'ads3':ads3,'ads4':ads4,'spec_heater':spectrometer_heater_status,'batt_heater':battery_heater_status}
     data = pd.DataFrame(dataStructure)
+
     return(data,wavelength,spectrum)
         
 def extractData():
@@ -149,7 +152,6 @@ def plotTemperatures(data,ax):
     ax.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3, ncol=3, mode="expand", borderaxespad=0.)
     ax.set_xlim(left=0)
     ax.grid(True) 
-   
 
     
 def plotADS(data,ax):
@@ -256,29 +258,32 @@ def saveData():
 def main():
     
     #====================================INPUTS====================================
-    directory = "C:\\HAO-IG\\DIMS\\Software\\Data\\4-12-2018\\"
-    timeToPlot = 500
+    directory = "C:\\HAO-IG\\DIMS\\Flight Data\\SLC\\subset\\"
+    timeToPlot = 120000#11164
     #====================================INPUTS====================================
 
 
     files = getFiles(directory)
     data,wavelength,spectrum = getData(files)
     extractData()
-
-    fig = plt.subplots()
-    ax1=plt.subplot(321)
-    ax2=plt.subplot(323)
-    ax3=plt.subplot(325)
-    ax4=plt.subplot(122)
     
-    plotTemperatures(data,ax1)
-    plotADS(data,ax2)
-    #fig,(ax1,ax2,ax3)=plt.subplots(3,1)
-    #fig,(ax2,ax3)=plt.subplots(2,1)
-    #irradiance = calibrateIrradiance(wavelength,spectrum,ax1)
-    #irradiance = spectrum    
-    plotSpectrum(data,wavelength,spectrum,timeToPlot,ax3,ax4)
-    saveData()
+    proceed=True
+    
+    if proceed:   
+        fig = plt.subplots()
+        ax1=plt.subplot(321)
+        ax2=plt.subplot(323)
+        ax3=plt.subplot(325)
+        ax4=plt.subplot(122)
+        
+        plotTemperatures(data,ax1)
+        plotADS(data,ax2)
+        #fig,(ax1,ax2,ax3)=plt.subplots(3,1)
+        #fig,(ax2,ax3)=plt.subplots(2,1)
+        #irradiance = calibrateIrradiance(wavelength,spectrum,ax1)
+        #irradiance = spectrum    
+        plotSpectrum(data,wavelength,spectrum,timeToPlot,ax3,ax4)
+        saveData()
 
 if __name__ == "__main__":
     main()
